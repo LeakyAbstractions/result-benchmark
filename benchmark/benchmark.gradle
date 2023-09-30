@@ -1,0 +1,18 @@
+
+jmh {
+    jmhVersion       = '1.37'
+    warmupIterations = 2
+    iterations       = 10
+    fork             = 4
+    verbosity        = 'EXTRA'
+    profilers        = ['cl', 'comp', 'gc', 'stack']
+    resultFormat     = 'JSON'
+    resultsFile      = project.file('build/reports/jmh/results.json')
+}
+
+jmhReport {
+    jmhResultPath    = project.file('build/reports/jmh/results.json')
+    jmhReportOutput  = project.file('build/reports/jmh')
+}
+
+tasks.jmh.finalizedBy tasks.jmhReport
