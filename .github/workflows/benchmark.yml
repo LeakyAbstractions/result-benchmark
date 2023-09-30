@@ -1,0 +1,143 @@
+
+# Benchmark
+name: Benchmark
+
+on:
+  workflow_dispatch:
+    inputs:
+      jmhVersion:
+        description: Java Microbenchmark Harness version
+        required: true
+        type: string
+        default: '1.37'
+      benchmarkMode:
+        description: 'Benchmark mode'
+        required: true
+        type: choice
+        default: Throughput
+        options:
+          - Throughput
+          - AverageTime
+          - SampleTime
+          - SingleShotTime
+          - All
+      warmupIterations:
+        description: Number of warmup iterations
+        required: true
+        type: number
+        default: 2
+      iterations:
+        description: Number of measurement iterations
+        required: true
+        type: number
+        default: 8
+      fork:
+        description: Number of times to fork a single benchmark
+        required: true
+        type: number
+        default: 2
+      threads:
+        description: Number of worker threads
+        required: true
+        type: number
+        default: 4
+      publish:
+        description: Publish report to GitHub Pages
+        required: true
+        type: boolean
+        default: true
+
+jobs:
+  build:
+
+    name: Benchmark
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # ================================
+    # SHALLOW CLONE
+    # ================================
+    - name: Shallow clone
+      uses: actions/checkout@v3
+
+    # ================================
+    # SET UP JDK
+    # ================================
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-package: jdk
+        java-version: 21
+
+    # ================================
+    # SETUP GRADLE
+    # ================================
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
+    # ================================
+    # BENCHMARK
+    # ================================
+    - name: Benchmark
+      uses: gradle/gradle-build-action@v2
+      env:
+        JMH_VERSION:           ${{ inputs.jmhVersion       }}
+        JMH_BENCHMARK_MODE:    ${{ inputs.benchmarkMode    }}
+        JMH_WARMUP_ITERATIONS: ${{ inputs.warmupIterations }}
+        JMH_ITERATIONS:        ${{ inputs.iterations       }}
+        JMH_FORK:              ${{ inputs.fork             }}
+        JMH_THREADS:           ${{ inputs.threads          }}
+      with:
+        arguments: jmh -x jmhReport --info --scan
+
+    # ================================
+    # UPLOAD RESULTS
+    # ================================
+    - name: Upload Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: results.json
+        path: ./benchmark/build/reports/jmh/results.json
+
+    # ================================
+    # GENERATE REPORT
+    # ================================
+    - name: Generate Report
+      if: ${{ inputs.publish }}
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: jmhReport --info --scan
+
+    # ================================
+    # MAKE BADGE
+    # ================================
+    - name: Make Badge
+      if: ${{ inputs.publish }}
+      shell: bash
+      run: |
+        SCENARIO="com.leakyabstractions.result.benchmark.SimpleFailureScenario"
+        SCORE_RESULTS=`jq ".[] | select(.benchmark == \"$SCENARIO.results\").primaryMetric.score" ./benchmark/build/reports/jmh/results.json`
+        SCORE_EXCEPTIONS=`jq ".[] | select(.benchmark == \"$SCENARIO.exceptions\").primaryMetric.score" ./benchmark/build/reports/jmh/results.json`
+        TIMES_FASTER=`printf "%.0f\n" $(jq -n "$SCORE_RESULTS / $SCORE_EXCEPTIONS")`
+        LOGO_CONTENTS=`cat ./benchmark/build/reports/jmh/badge-logo.svg`
+        echo "According to the benchmark, returning a failed result is $TIMES_FASTER times faster than throwing an exception"
+        jq -n ".schemaVersion |= 1                                   |
+               .style         |= \"for-the-badge\"                   |
+               .labelColor    |= \"eee\"                             |
+               .color         |= \"purple\"                          |
+               .label         |= \"$TIMES_FASTER×\"                  |
+               .message       |= \"faster than throwing exceptions\" |
+               .logoSvg       |= \"$LOGO_CONTENTS\"                  " > ./benchmark/build/reports/jmh/badge.json
+
+    # ================================
+    # DEPLOY GITHUB PAGES
+    # ================================
+    - name: Deploy GitHub Pages
+      if: ${{ inputs.publish }}
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: ./benchmark/build/reports/jmh

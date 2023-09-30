@@ -1,9 +1,11 @@
 
 jmh {
-    jmhVersion       = '1.37'
-    warmupIterations = 2
-    iterations       = 10
-    fork             = 4
+    jmhVersion       =     System.getenv('JMH_VERSION')           ?: '1.37'
+    warmupIterations =   ( System.getenv('JMH_WARMUP_ITERATIONS') ?: 2            ) as Integer
+    iterations       =   ( System.getenv('JMH_ITERATIONS')        ?: 10           ) as Integer
+    fork             =   ( System.getenv('JMH_FORK')              ?: 4            ) as Integer
+    threads          =   ( System.getenv('JMH_THREADS')           ?: 4            ) as Integer
+    benchmarkMode    = [ ( System.getenv('JMH_BENCHMARK_MODE')    ?: 'Throughput' ) ]
     verbosity        = 'EXTRA'
     profilers        = ['cl', 'comp', 'gc', 'stack']
     resultFormat     = 'JSON'
