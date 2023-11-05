@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation platform("com.leakyabstractions:result-bom:0.1.2.0")
+    implementation platform("com.leakyabstractions:result-bom:0.2.0.1")
     implementation "com.leakyabstractions:result"
 }
 
