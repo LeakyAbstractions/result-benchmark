@@ -36,6 +36,12 @@ jobs:
         java-version: 21
 
     # ================================
+    # VALIDATE GRADLE WRAPPER
+    # ================================
+    - name: Validate Gradle Wrapper
+      uses: gradle/wrapper-validation-action@v1
+
+    # ================================
     # SETUP GRADLE
     # ================================
     - name: Setup Gradle
