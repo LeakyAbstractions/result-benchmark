@@ -16,7 +16,7 @@
 
 package com.leakyabstractions.result.benchmark;
 
-import com.leakyabstractions.result.Result;
+import com.leakyabstractions.result.api.Result;
 import com.leakyabstractions.result.benchmark.failure.Failure;
 import com.leakyabstractions.result.benchmark.service.Service;
 import com.leakyabstractions.result.benchmark.usecase.UseCase;

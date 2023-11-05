@@ -16,7 +16,7 @@
 
 package com.leakyabstractions.result.benchmark;
 
-import com.leakyabstractions.result.Result;
+import com.leakyabstractions.result.api.Result;
 import com.leakyabstractions.result.benchmark.service.ComplexService;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
