@@ -27,6 +27,5 @@ jobs:
       uses: gradle-update/update-gradle-wrapper-action@v1
       with:
         release-channel: stable
-        pr-title-template: "Update Gradle Wrapper to version %targetVersion%"
         base-branch: main
         target-branch: develop
