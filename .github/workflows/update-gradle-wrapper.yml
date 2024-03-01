@@ -18,7 +18,7 @@ jobs:
     # SHALLOW CLONE
     # ================================
     - name: Shallow clone
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # ================================
     # UPDATE GRADLE WRAPPER
