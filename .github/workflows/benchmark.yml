@@ -75,7 +75,7 @@ jobs:
     # SETUP GRADLE
     # ================================
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v3
       with:
         cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
@@ -83,7 +83,7 @@ jobs:
     # BENCHMARK
     # ================================
     - name: Benchmark
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v3
       env:
         JMH_VERSION:           ${{ inputs.jmhVersion       }}
         JMH_BENCHMARK_MODE:    ${{ inputs.benchmarkMode    }}
@@ -108,7 +108,7 @@ jobs:
     # ================================
     - name: Generate Report
       if: ${{ inputs.publish }}
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/gradle-build-action@v3
       with:
         arguments: jmhReport --info --scan
 
