@@ -67,16 +67,28 @@ public Result<String, ComplexFailure> usingResults(int number) {
 
 ## Getting Started
 
-To run the benchmarks locally, execute this command:
+> [!IMPORTANT]
+>
+> The report you can see [here][BENCHMARK] was generated on a [GitHub-hosted runner][GITHUB_HOSTED_RUNNER] using the latest [Ubuntu][UBUNTU_RUNNER] image and the latest [Azul Zulu OpenJDK][AZUL_ZULU_OPENJDK] version.
+> Performance measurements may vary depending on different factors such as architecture, operating system, or Java virtual machine.
+> Please remember that you should run your own benchmarks to make informed decisions for your specific project.
+
+To run the [JMH benchmarks][JMH] locally, execute this command:
 
 ```sh
 ./gradlew jhm
 ```
 
+Once they are complete, a report will be generated automatically by [JMH Visualizer][JMH_VISUALIZER].
+
+```sh
+start ./benchmark/build/reports/jmh/index.html
+```
+
 
 ## Author
 
-Copyright 2023 [Guillermo Calvo][AUTHOR].
+Copyright 2024 [Guillermo Calvo][AUTHOR].
 
 [![][GUILLERMO_IMAGE]][GUILLERMO]
 
@@ -116,9 +128,14 @@ See the License for the specific language governing permissions and limitations 
 
 
 [AUTHOR]:                       https://github.com/guillermocalvo/
+[AZUL_ZULU_OPENJDK]:            https://github.com/actions/setup-java?tab=readme-ov-file#azul-zulu-openjdk
 [BADGE_TIMES_FASTER]:           https://img.shields.io/endpoint?url=https://dev.leakyabstractions.com/result-benchmark/badge.json
 [BENCHMARK]:                    https://dev.leakyabstractions.com/result-benchmark/
+[GITHUB_HOSTED_RUNNER]:         https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#using-a-github-hosted-runner
 [GUILLERMO]:                    https://guillermo.dev/
 [GUILLERMO_IMAGE]:              https://guillermo.dev/assets/images/thumb.png
+[JMH]:                          https://openjdk.org/projects/code-tools/jmh/
+[JMH_VISUALIZER]:               https://github.com/jzillmann/jmh-visualizer/
 [RESULT]:                       https://dev.leakyabstractions.com/result/
 [TIMES_FASTER]:                 https://dev.leakyabstractions.com/result-benchmark/
+[UBUNTU_RUNNER]:                https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
