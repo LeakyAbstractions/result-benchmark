@@ -76,7 +76,7 @@ To run the benchmarks locally, execute this command:
 
 ## Author
 
-Copyright 2023 [Guillermo Calvo][AUTHOR].
+Copyright 2024 [Guillermo Calvo][AUTHOR].
 
 [![][GUILLERMO_IMAGE]][GUILLERMO]
 
