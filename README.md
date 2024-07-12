@@ -1,5 +1,5 @@
 
-[![Latest Report][BADGE_TIMES_FASTER]][TIMES_FASTER]
+[![Latest Report][BADGE_TIMES_FASTER]][BENCHMARK]
 
 # Result Library Benchmarks
 
@@ -15,7 +15,8 @@ There are simple and complex scenarios to compare performance when using results
 
 ### Simple Scenarios
 
-The first scenarios compare the most basic usage: a method that returns a `String` or fails, depending on a given `int` parameter:
+The first scenarios compare the most basic usage: a method that returns a `String` or fails, depending on a given `int`
+parameter:
 
 #### Using Exceptions
 
@@ -41,7 +42,8 @@ public Result<String, SimpleFailure> usingResults(int number) {
 
 ### Complex Scenarios
 
-The next scenarios do something a little bit more elaborate: a method invokes the previous method to retrieve a `String`; if successful, then converts it to upper case; otherwise transforms the "simple" error into a "complex" error.
+The next scenarios do something a little bit more elaborate: a method invokes the previous method to retrieve a
+`String`; if successful, then converts it to upper case; otherwise transforms the "simple" error into a "complex" error.
 
 #### Using Exceptions
 
@@ -69,9 +71,11 @@ public Result<String, ComplexFailure> usingResults(int number) {
 
 > [!IMPORTANT]
 >
-> The report you can see [here][BENCHMARK] was generated on a [GitHub-hosted runner][GITHUB_HOSTED_RUNNER] using the latest [Ubuntu][UBUNTU_RUNNER] image and the latest [Azul Zulu OpenJDK][AZUL_ZULU_OPENJDK] version.
-> Performance measurements may vary depending on different factors such as architecture, operating system, or Java virtual machine.
-> Please remember that you should run your own benchmarks to make informed decisions for your specific project.
+> The report you can see [here][BENCHMARK] was generated on a [GitHub-hosted runner][GITHUB_HOSTED_RUNNER] using the
+> latest [Ubuntu][UBUNTU_RUNNER] image and the latest [Azul Zulu OpenJDK][AZUL_ZULU_OPENJDK] version.
+> Performance measurements may vary depending on different factors such as architecture, operating system, or Java
+> virtual machine. Please remember that you should run your own benchmarks to make informed decisions for your specific
+> project.
 
 To run the [JMH benchmarks][JMH] locally, execute this command:
 
@@ -136,6 +140,5 @@ See the License for the specific language governing permissions and limitations 
 [GUILLERMO_IMAGE]:              https://guillermo.dev/assets/images/thumb.png
 [JMH]:                          https://openjdk.org/projects/code-tools/jmh/
 [JMH_VISUALIZER]:               https://github.com/jzillmann/jmh-visualizer/
-[RESULT]:                       https://dev.leakyabstractions.com/result/
-[TIMES_FASTER]:                 https://dev.leakyabstractions.com/result-benchmark/
+[RESULT]:                       https://result.leakyabstractions.com/
 [UBUNTU_RUNNER]:                https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
