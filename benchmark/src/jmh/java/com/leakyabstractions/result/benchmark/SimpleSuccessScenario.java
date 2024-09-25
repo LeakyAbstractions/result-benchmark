@@ -17,7 +17,6 @@
 package com.leakyabstractions.result.benchmark;
 
 import com.leakyabstractions.result.api.Result;
-import com.leakyabstractions.result.benchmark.service.ComplexService;
 import com.leakyabstractions.result.benchmark.service.SimpleService;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
@@ -47,7 +46,7 @@ public class SimpleSuccessScenario extends SimpleScenario {
     }
 
     /**
-     * Benchmarks the use case where a {@link ComplexService} succeeds by returning a {@code String} {@link Result}.
+     * Benchmarks the use case where a {@link SimpleService} succeeds by returning a {@code String} {@link Result}.
      *
      * @param bh A black hole.
      */
