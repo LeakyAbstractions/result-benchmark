@@ -33,7 +33,7 @@ jobs:
       with:
         distribution: 'zulu'
         java-package: jdk
-        java-version: 23
+        java-version: 24
 
     # ================================
     # VALIDATE GRADLE WRAPPER
