@@ -3,10 +3,6 @@ testing {
     suites {
         test {
             useJUnitJupiter()
-            dependencies {
-                runtimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-                implementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
-            }
         }
     }
 }
