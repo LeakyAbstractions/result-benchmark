@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Guillermo Calvo
+ * Copyright 2026 Guillermo Calvo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import com.leakyabstractions.result.benchmark.usecase.ComplexUseCase;
 /**
  * Base class for all complex scenarios.
  * <p>
- * Simple scenarios use a {@link ComplexUseCase} that returns a {@code String} representing either the success or the error message.
+ * Complex scenarios use a {@link ComplexUseCase} that returns a {@code String} representing either the success or the error message.
  */
 public abstract class ComplexScenario extends Scenario {
 

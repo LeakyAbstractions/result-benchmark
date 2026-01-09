@@ -22,20 +22,10 @@ jobs:
     # SHALLOW CLONE
     # ================================
     - name: Shallow clone
-      uses: actions/checkout@v4
-
-    # ================================
-    # SET UP JDK
-    # ================================
-    - name: Set up JDK
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu'
-        java-package: jdk
-        java-version: 21
+      uses: actions/checkout@v6
 
     # ================================
     # SUBMIT DEPENDENCIES
     # ================================
     - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@v4
+      uses: gradle/actions/dependency-submission@v5

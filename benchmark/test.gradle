@@ -1,10 +1,8 @@
-// Use JUnit Platform to execute the tests
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-// Configure test dependencies
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+// Configure test suite
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+        }
+    }
 }

@@ -92,7 +92,7 @@ start ./benchmark/build/reports/jmh/index.html
 
 ## Author
 
-Copyright 2024 [Guillermo Calvo][AUTHOR].
+Copyright 2026 [Guillermo Calvo][AUTHOR].
 
 [![][GUILLERMO_IMAGE]][GUILLERMO]
 

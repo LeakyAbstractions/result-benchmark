@@ -59,23 +59,23 @@ jobs:
     # SHALLOW CLONE
     # ================================
     - name: Shallow clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     # ================================
     # SET UP JDK
     # ================================
     - name: Set up JDK
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: 'zulu'
         java-package: jdk
-        java-version: 21
+        java-version: 25
 
     # ================================
     # SET UP GRADLE
     # ================================
     - name: Set up Gradle
-      uses: gradle/actions/setup-gradle@v4
+      uses: gradle/actions/setup-gradle@v5
       with:
         build-scan-publish: true
         build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
@@ -99,7 +99,7 @@ jobs:
     # UPLOAD RESULTS
     # ================================
     - name: Upload Results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: results.json
         path: ./benchmark/build/reports/jmh/results.json
@@ -112,17 +112,29 @@ jobs:
       run: ./gradlew jmhReport
 
     # ================================
-    # MAKE BADGE
+    # COMPARE RESULTS
     # ================================
-    - name: Make Badge
+    - name: Compare Results
+      id: compare_results
       shell: bash
       run: |
         SCENARIO="com.leakyabstractions.result.benchmark.SimpleFailureScenario"
         SCORE_RESULTS=`jq ".[] | select(.benchmark == \"$SCENARIO.results\").primaryMetric.score" ./benchmark/build/reports/jmh/results.json`
         SCORE_EXCEPTIONS=`jq ".[] | select(.benchmark == \"$SCENARIO.exceptions\").primaryMetric.score" ./benchmark/build/reports/jmh/results.json`
         TIMES_FASTER=`printf "%.0f\n" $(jq -n "$SCORE_RESULTS / $SCORE_EXCEPTIONS")`
-        LOGO_CONTENTS=`cat ./benchmark/build/reports/jmh/badge-logo.svg`
+        echo "times_faster=$TIMES_FASTER" >> $GITHUB_OUTPUT
         echo "According to the benchmark, returning a failed result is $TIMES_FASTER times faster than throwing an exception" >> $GITHUB_STEP_SUMMARY
+
+    # ================================
+    # MAKE BADGE
+    # ================================
+    - name: Make Badge
+      if: ${{ inputs.publish }}
+      shell: bash
+      env:
+        TIMES_FASTER: ${{ steps.compare_results.outputs.times_faster }}
+      run: |
+        LOGO_CONTENTS=`cat ./benchmark/build/reports/jmh/badge-logo.svg`
         jq -n ".schemaVersion |= 1                                   |
                .style         |= \"for-the-badge\"                   |
                .labelColor    |= \"eee\"                             |
